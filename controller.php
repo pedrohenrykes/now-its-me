@@ -4,17 +4,15 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 date_default_timezone_set('America/Recife');
 
 $menuOptions = [
-    "ListagemLocais" => "Cadastro de Locais",
-    "ListagemEventos" => "Cadastro de Eventos",
-    "ListagemProgramacoes" => "Cadastro de Programações"
+
 ];
 
-function setMain( $page )
+function setContent( $page )
 {
     if ( !empty( $page ) &&  file_exists( "views/{$page}View.php" ) ) {
         require_once "views/{$page}View.php";
     } else {
-        require_once "views/ListagemEventosView.php";
+        require_once "views/InicialView.php";
     }
 }
 
@@ -34,17 +32,22 @@ function setHeader()
     echo $header;
 }
 
-function setFooter()
+function setScripts()
 {
-    echo file_get_contents( "resources/app/html/footer.html" );
+    $scripts = file_get_contents( "resources/app/html/scripts.html" );
+
+    $scripts = str_replace( "{TEMPLATE}", "resources/template/", $scripts );
+    $scripts = str_replace( "{APP}", "resources/app/", $scripts );
+
+    echo $scripts;
 }
 
 function setStyles()
 {
-    echo file_get_contents( "resources/app/html/styles.html" );
-}
+    $styles = file_get_contents( "resources/app/html/styles.html" );
 
-function setScripts()
-{
-    echo file_get_contents( "resources/app/html/scripts.html" );
+    $styles = str_replace( "{TEMPLATE}", "resources/template/", $styles );
+    $styles = str_replace( "{APP}", "resources/app/", $styles );
+
+    echo $styles;
 }
